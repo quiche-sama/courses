@@ -9,6 +9,25 @@ from courses_app.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
+
+def login_required(view):
+    """View decorator that redirects anonymous users to the login page."""
+
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for("auth.login"))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
+
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
@@ -77,19 +96,3 @@ def load_logged_in_user():
             'SELECT * FROM user WHERE id = ?', (user_id,)
         ).fetchone()
 
-
-@bp.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for('index'))
-
-
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for('auth.login'))
-
-        return view(**kwargs)
-
-    return wrapped_view()

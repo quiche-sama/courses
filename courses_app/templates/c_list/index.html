@@ -3,7 +3,7 @@
 {% block header %}
   <h1>{% block title %}Listes{% endblock %}</h1>
   {% if g.user %}
-    <a class="action" href="{{ url_for('c_list.create') }}">New</a>
+    <a class="button is-primary" href="{{ url_for('c_list.create') }}">New</a>
   {% endif %}
 {% endblock %}
 
@@ -15,8 +15,8 @@
           <h1>{{ clist['title'] }}</h1>
           <div class="about">by {{ clist['username'] }} on {{ clist['created'].strftime('%Y-%m-%d') }}</div>
         </div>
-        {% if g.user['id'] == clist['author_id'] %}
-          <a class="action" href="{{ url_for('c_list.update', id=clist['id']) }}">Edit</a>
+        {% if g.user['id'] == clist['owner_id'] %}
+          <a class="button" href="{{ url_for('c_list.update', id=clist['id']) }}">Edit</a>
         {% endif %}
       </header>
       <p class="body">{{ clist['body'] }}</p>
