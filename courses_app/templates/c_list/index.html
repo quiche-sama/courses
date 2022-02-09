@@ -1,28 +1,57 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Listes{% endblock %}</h1>
+<h1 xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">{% block title %}Listes{% endblock %}</h1>
+
+<!-- Bloc de bouton new si utilisateur co-->
   {% if g.user %}
     <a class="button is-primary" href="{{ url_for('c_list.create') }}">New</a>
   {% endif %}
+<!-- Bloc de bouton new-->
+
 {% endblock %}
 
-{% block content %}
+<!-- fin du header-->
+
+<div class="tile is-ancestor">
+  <!-- All other tile elements -->
+
+  <!-- titre de la liste -->
+  {% block content %}
   {% for clist in listes_de_courses %}
-    <article class="post">
-      <header>
-        <div>
-          <h1>{{ clist['title'] }}</h1>
-          <div class="about">by {{ clist['username'] }} on {{ clist['created'].strftime('%Y-%m-%d') }}</div>
-        </div>
-        {% if g.user['id'] == clist['owner_id'] %}
-          <a class="button" href="{{ url_for('c_list.update', id=clist['id']) }}">Edit</a>
-        {% endif %}
-      </header>
-      <p class="body">{{ clist['body'] }}</p>
-    </article>
+  <p class="tilei s-4 is-vertical">
+     <div class="tile is-parent is-vertical is-primary"">
+
+            <article class="tile is-child notification is-success">
+              <div class="content">
+                  <p class="title"><h1>Liste  {{ clist['title'] }} </h1></p>
+                  <div class="content">
+                        {% if g.user['id'] == clist['owner_id'] %}
+                                   <button class="button" href="{{ url_for('c_list.update', id=clist['id']) }}">Edit</button>
+                                   <button class="button href="{{ url_for('c_list.update', id=clist['id']) }}">Delete</button>
+                        {% endif %}
+                  </div>
+                    <!--body a bossser plus tar-->
+                   <p class="subtitle"> by {{ clist['username'] }} on {{ clist['created'].strftime('%Y-%m-%d') }}</p>
+
+                   <div class="content">
+                         <p class="body">{{ clist['body'] }}</p>
+                   </div>
+            </article>
+</div>
+
+    </div>
+
+
+</div>
     {% if not loop.last %}
       <hr>
     {% endif %}
   {% endfor %}
 {% endblock %}
+
+
+</div>
+
+
+  <!-- All other tile elements before --> </div>
