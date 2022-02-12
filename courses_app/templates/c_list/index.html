@@ -1,13 +1,56 @@
+
+
+<!-- il faudra ajouter un URLHOME-->
+
+<div class="navbar.is-widescreen" role="navigation" aria-label="main navigation">
+
+        <div class="navbar-brand">
+                <a class="navbar-item " href="http://127.0.0.1:5000/">
+                  <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+                </a>
+                <a role="button" class="navbar-burger" #navBurger>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                </a>
+
+<div class="navbar-menu py-auto" #navMenu>
+
+    <!-- hidden on mobile -->
+    <div class="navbar-start">
+        <!-- Bloc de bouton new si utilisateur co-->
+        {% if g.user %}
+             <p class="control level-item has-text-centered"> <a class=" button navbar-item " href="{{ url_for('c_list.create') }}">New</a></p>
+        {% endif %}
+        <!-- Bloc de bouton new-->
+    </div>
+
+    <div class="navbar-end">
+
+        <div class="field has-addons is-right level-item has-text-centered">
+            {% if g.user %}
+            <div class="box">{{ g.user['username'] }}
+            <p class="control"> <a class="button navbar-item" href="{{ url_for('auth.logout') }}">Log Out</a></p>
+            </div>
+            {% else %}
+            <p class="control"> <a class="is-primary navbar-item" href="{{ url_for('auth.register') }}">Register</a></p>
+            <p class="control"> <a class="is-primary navbar-item" href="{{ url_for('auth.login') }}">Log In</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+    </div>
+</div>
+
+
+
+<!-- TEST ------->
 {% extends 'base.html' %}
 
 {% block header %}
 <h1 xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">{% block title %}Listes{% endblock %}</h1>
 
-<!-- Bloc de bouton new si utilisateur co-->
-  {% if g.user %}
-    <a class="button is-primary" href="{{ url_for('c_list.create') }}">New</a>
-  {% endif %}
-<!-- Bloc de bouton new-->
+
 
 {% endblock %}
 
@@ -19,18 +62,23 @@
   <!-- titre de la liste -->
   {% block content %}
   {% for clist in listes_de_courses %}
-  <p class="tilei s-4 is-vertical">
-     <div class="tile is-parent is-vertical is-primary">
 
-            <article class="tile is-child notification is-success">
+     <div class="tile is-parent">
+
+            <article class="tile is-child is-4 notification">
               <div class="content">
                   <a href="{{ url_for('c_list.update', id=clist['id']) }}" class="button is-link">
                   Liste  {{ clist['title'] }}
                   </a>
+                         {% if g.user['id'] == clist['owner_id'] %}
+                                   <div class="content">
+                                   <button class="button" href="{{ url_for('c_list.update', id=clist['id']) }}">Edit</button>
+                                   <button class="button href="{{ url_for('c_list.update', id=clist['id']) }}">Delete</button>
+                        {% endif %}
+              </div>
 
-                  <div class="content">
-                      <a href="{{ url_for('c_list.delete', id=clist['id']) }}" class="button is-danger">Delete</a>
-                  </div>
+
+
                     <!--body a bossser plus tar-->
                    <p class="subtitle"> by {{ clist['username'] }} on {{ clist['created'].strftime('%Y-%m-%d') }}</p>
 
