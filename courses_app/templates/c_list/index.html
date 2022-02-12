@@ -20,16 +20,16 @@
   {% block content %}
   {% for clist in listes_de_courses %}
   <p class="tilei s-4 is-vertical">
-     <div class="tile is-parent is-vertical is-primary"">
+     <div class="tile is-parent is-vertical is-primary">
 
             <article class="tile is-child notification is-success">
               <div class="content">
-                  <p class="title"><h1>Liste  {{ clist['title'] }} </h1></p>
+                  <a href="{{ url_for('c_list.update', id=clist['id']) }}" class="button is-link">
+                  Liste  {{ clist['title'] }}
+                  </a>
+
                   <div class="content">
-                        {% if g.user['id'] == clist['owner_id'] %}
-                                   <button class="button" href="{{ url_for('c_list.update', id=clist['id']) }}">Edit</button>
-                                   <button class="button href="{{ url_for('c_list.update', id=clist['id']) }}">Delete</button>
-                        {% endif %}
+                      <a href="{{ url_for('c_list.delete', id=clist['id']) }}" class="button is-danger">Delete</a>
                   </div>
                     <!--body a bossser plus tar-->
                    <p class="subtitle"> by {{ clist['username'] }} on {{ clist['created'].strftime('%Y-%m-%d') }}</p>

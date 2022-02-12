@@ -43,7 +43,7 @@ def create():
     return render_template('c_list/create.html')
 
 
-def get_c_list(id, check_owner=True):
+def get_c_list(id, check_owner=False):
     c_list = get_db().execute(
         'SELECT c.id, title, body, created, owner_id, username'
         ' FROM clist c JOIN user u ON c.owner_id = u.id'
