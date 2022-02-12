@@ -78,7 +78,7 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE c_list SET title = ?, body = ?'
+                'UPDATE clist SET title = ?, body = ?'
                 ' WHERE id = ?',
                 (title, body, id)
             )
