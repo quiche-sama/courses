@@ -96,3 +96,5 @@ def delete(id):
     db.execute('DELETE FROM clist WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('c_list.index'))
+
+
