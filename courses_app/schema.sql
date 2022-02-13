@@ -15,3 +15,16 @@ CREATE TABLE clist (
   body TEXT NOT NULL,
   FOREIGN KEY (owner_id) REFERENCES user (id)
 );
+
+CREATE TABLE clist_citem (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  clist_id INTEGER NOT NULL,
+  citem_id INTEGER NOT NULL,
+  FOREIGN KEY (clist_id) REFERENCES clist (id),
+  FOREIGN KEY (citem_id) REFERENCES citem (id)
+);
+
+CREATE TABLE citem (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT UNIQUE NOT NULL
+);
